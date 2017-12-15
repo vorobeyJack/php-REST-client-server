@@ -1,1 +1,1 @@
-REST client/server impelemenation in plain PHP 
+REST client/server implementation in plain PHP 
