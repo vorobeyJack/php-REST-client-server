@@ -1,5 +1,5 @@
 <?php
-declare(strict_types1=);
+declare(strict_types=1);
 
 /**
  * Class AbstractHttp
@@ -28,4 +28,43 @@ class AbstractHttp
     protected $metaData;
     protected $scheme;
     protected $data = [];
+
+    /**
+     * @param string $key
+     * @param string $value
+     */
+    public function setHeaderByKey(string $key, string $value): void
+    {
+        $this->headers[$key] = $value;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    public function getHeaders(string $key): string
+    {
+        return $this->headers[$key] ?? null;
+    }
+
+    /**
+     * @param $key
+     *
+     * @return string
+     */
+    public function getDataByKey($key): string
+    {
+        return $this->data[$key] ?? null;
+    }
+
+    /**
+     * @param $key
+     *
+     * @return null
+     */
+    public function getMetaDataByKey($key)
+    {
+        return $this->metaData[$key] ?? null;
+    }
 }
