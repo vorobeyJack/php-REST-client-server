@@ -41,11 +41,21 @@ class AbstractHttp
     }
 
     /**
+     * @param $data
+     *
+     * @return array
+     */
+    public function setMetaData($data): array
+    {
+        $this->metaData = $data;
+    }
+
+    /**
      * @param string $key
      *
      * @return string
      */
-    public function getHeaders(string $key)
+    public function getHeaderByKey(string $key)
     {
         return $this->headers[$key] ?? null;
     }
@@ -91,11 +101,39 @@ class AbstractHttp
     }
 
     /**
+     * @param array $data
+     */
+    public function setData(array $data): void
+    {
+        $this->data = $data;
+    }
+
+    /**
      * @return string
      */
     public function getDataEncoded()
     {
         return http_build_query($this->getData());
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethod(): string
+    {
+        return $this->method;
+    }
+
+    /**
+     * @param $method
+     *
+     * @return $this
+     */
+    public function setMethod($method)
+    {
+        $this->method = $method;
+
+        return $this;
     }
 
     /**
@@ -112,5 +150,21 @@ class AbstractHttp
                 $this->transport = self::TRANSPORT_HTTP;
             }
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getScheme(): string
+    {
+        return $this->scheme;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUri(): string
+    {
+        return $this->uri;
     }
 }
