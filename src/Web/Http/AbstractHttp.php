@@ -20,8 +20,8 @@ class AbstractHttp
     const TRANSPORT_HTTP                = 'http';
     const TRANSPORT_HTTPS               = 'https';
     const STATUS_200                    = '200';
-    const STATUS_401                    = '401';
-    const STATUS_500                    = '500';
+//    const STATUS_401                    = '401';
+//    const STATUS_500                    = '500';
 
     protected $uri;
     protected $method;
