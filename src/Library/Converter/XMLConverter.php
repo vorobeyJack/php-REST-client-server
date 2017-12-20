@@ -8,6 +8,8 @@ use SimpleXMLElement;
 
 class XMLConverter implements \ConverterInterface
 {
+    const UNKNOWN_KEY = 'unknown_key';
+
     /**
      * @param \SimpleXMLIterator $xml
      *
@@ -45,8 +47,33 @@ class XMLConverter implements \ConverterInterface
         return $xml->asXML();
     }
 
+    /**
+     * @param $value
+     * @param $xml
+     */
     public function phpToXML($value, &$xml)
     {
-        // TODO: Implement phpToXML() method.
+        $node = $value;
+        if (is_object($node)) {
+            $node = get_object_vars($node);
+        }
+        if (is_array($node)) {
+            foreach ($node as $k => $v) {
+                if (is_numeric($k)) {
+                    $k = 'number' . $k;
+                }
+                if (is_array($v)) {
+                    $newNode = $xml->addChild($k);
+                    $this->phpToXml($v, $newNode);
+                } elseif (is_object($v)) {
+                    $newNode = $xml->addChild($k);
+                    $this->phpToXml($v, $newNode);
+                } else {
+                    $xml->addChild($k, $v);
+                }
+            }
+        } else {
+            $xml->addChild(self::UNKNOWN_KEY, $node);
+        }
     }
 }
