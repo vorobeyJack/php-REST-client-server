@@ -4,18 +4,45 @@ declare(strict_types=1);
 namespace App\Library\Converter;
 
 use SimpleXMLIterator;
+use SimpleXMLElement;
 
 class XMLConverter implements \ConverterInterface
 {
-
-    public function xmlToArray(SimpleXMLIterator $iterator): array
+    /**
+     * @param \SimpleXMLIterator $xml
+     *
+     * @return array
+     */
+    public function xmlToArray(SimpleXMLIterator $xml): array
     {
-        // TODO: Implement xmlToArray() method.
+        $a = [];
+        for ($xml->rewind(); $xml->valid(); $xml->next()) {
+            if (!array_key_exists($xml->key(), $a)) {
+                $a[$xml->key()] = [];
+            }
+            if ($xml->hasChildren()) {
+                $a[$xml->key()][] = $this->xmlToArray($xml->current());
+            } else {
+                $a[$xml->key()]          = (array)$xml->current()->attributes();
+                $a[$xml->key()]['value'] = strval($xml->current());
+            }
+        }
+
+        return $a;
     }
 
+    /**
+     * @param array $arr
+     *
+     * @return mixed
+     */
     public function arrayToXML(array $arr)
     {
-        // TODO: Implement arrayToXML() method.
+        $xml = new SimpleXMLElement(
+            '<?xml version="1.0" standalone="yes"?><root></root>');
+        $this->phpToXml($arr, $xml);
+
+        return $xml->asXML();
     }
 
     public function phpToXML($value, &$xml)
