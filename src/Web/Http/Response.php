@@ -9,6 +9,12 @@ namespace App\Web\Http;
  */
 class Response extends AbstractHttp
 {
+    private $uri;
+    private $method;
+    private $headers;
+    private $data;
+    private $cookies;
+
     /**
      * Response constructor.
      *
