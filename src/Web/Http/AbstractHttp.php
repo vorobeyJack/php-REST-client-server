@@ -20,12 +20,17 @@ class AbstractHttp
     const TRANSPORT_HTTPS               = 'https';
     const STATUS_200                    = '200';
 
+    /** @var string $uri **/
     protected $uri;
+    /** @var string $method **/
     protected $method;
-    protected $headers;
-    protected $cookies;
-    protected $metaData;
+    /** @var string $scheme **/
     protected $scheme;
+    /** @var array $headers **/
+    protected $headers = [];
+    /** @var array $metaData **/
+    protected $metaData = [];
+    /** @var array $data **/
     protected $data = [];
 
     /**
@@ -33,7 +38,7 @@ class AbstractHttp
      * @param string $value
      * @return AbstractHttp
      */
-    public function setHeaderByKey(string $key, string $value): AbstractHttp
+    public function setHeaderByKey(string $key, string $value) : AbstractHttp
     {
         $this->headers[$key] = $value;
 
@@ -42,20 +47,20 @@ class AbstractHttp
 
     /**
      * @param $data
-     *
-     * @return array
+     * @return AbstractHttp
      */
-    public function setMetaData($data): array
+    public function setMetaData($data) : AbstractHttp
     {
         $this->metaData = $data;
+
+        return $this;
     }
 
     /**
      * @param string $key
-     *
-     * @return string
+     * @return string|null
      */
-    public function getHeaderByKey(string $key)
+    public function getHeaderByKey(string $key) : ?string
     {
         return $this->headers[$key] ?? null;
     }
@@ -63,55 +68,59 @@ class AbstractHttp
     /**
      * @return array
      */
-    public function getData(): array
+    public function getData() : array
     {
         return $this->data;
     }
 
     /**
-     * @param $key
-     *
-     * @return string
+     * @param string $key
+     * @return string|null
      */
-    public function getDataByKey($key): string
+    public function getDataByKey(string $key) : ?string
     {
         return $this->data[$key] ?? null;
     }
 
     /**
      * @param $key
-     *
-     * @return null
+     * @return string|null
      */
-    public function getMetaDataByKey($key): string
+    public function getMetaDataByKey($key) : ?string
     {
         return $this->metaData[$key] ?? null;
     }
 
     /**
-     * @param string     $uri
+     * @param string $uri
      * @param array|null $params
+     * @return AbstractHttp
      */
-    public function setUri(string $uri, array $params = null): void
+    public function setUri(string $uri, array $params = null) : AbstractHttp
     {
         $this->uri = $uri;
         if ($params) {
             $this->uri .= '?' . http_build_query($params);
         }
+
+        return $this;
     }
 
     /**
      * @param array $data
+     * @return AbstractHttp
      */
-    public function setData(array $data): void
+    public function setData(array $data) : AbstractHttp
     {
         $this->data = $data;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getDataEncoded()
+    public function getDataEncoded() : string
     {
         return http_build_query($this->getData());
     }
@@ -119,17 +128,16 @@ class AbstractHttp
     /**
      * @return string
      */
-    public function getMethod(): string
+    public function getMethod() : string
     {
         return $this->method;
     }
 
     /**
-     * @param $method
-     *
-     * @return $this
+     * @param string $method
+     * @return AbstractHttp
      */
-    public function setMethod($method)
+    public function setMethod(string $method) : AbstractHttp
     {
         $this->method = $method;
 
@@ -137,9 +145,10 @@ class AbstractHttp
     }
 
     /**
-     * @param null $scheme
+     * @param string|null $scheme
+     * @return AbstractHttp
      */
-    public function setScheme($scheme = null): void
+    public function setScheme(string $scheme = null): AbstractHttp
     {
         if ($scheme) {
             $this->scheme = $scheme;
@@ -150,12 +159,14 @@ class AbstractHttp
                 $this->transport = self::TRANSPORT_HTTP;
             }
         }
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getScheme(): string
+    public function getScheme() : string
     {
         return $this->scheme;
     }
@@ -163,7 +174,7 @@ class AbstractHttp
     /**
      * @return string
      */
-    public function getUri(): string
+    public function getUri() : string
     {
         return $this->uri;
     }
