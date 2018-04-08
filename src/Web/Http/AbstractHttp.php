@@ -1,24 +1,26 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace vrba\rest\Web\Http;
 
 /**
  * Class AbstractHttp
+ *
+ * @package vrba\rest\Web\Http
  */
 class AbstractHttp
 {
-    const METHOD_GET                    = 'GET';
-    const METHOD_POST                   = 'POST';
-    const METHOD_PUT                    = 'PUT';
-    const METHOD_DELETE                 = 'DELETE';
-    const CONTENT_TYPE_HTML             = 'text/html';
-    const CONTENT_TYPE_JSON             = 'application/json';
-    const CONTENT_TYPE_FORM_URL_ENCODED = 'application/x-www-form-urlencoded';
+    public const METHOD_GET                    = 'GET';
+    public const METHOD_POST                   = 'POST';
+    public const METHOD_PUT                    = 'PUT';
+    public const METHOD_DELETE                 = 'DELETE';
+    public const CONTENT_TYPE_HTML             = 'text/html';
+    public const CONTENT_TYPE_JSON             = 'application/json';
+    public const CONTENT_TYPE_FORM_URL_ENCODED = 'application/x-www-form-urlencoded';
 
-    const HEADER_CONTENT_TYPE           = 'Content-Type';
-    const TRANSPORT_HTTP                = 'http';
-    const TRANSPORT_HTTPS               = 'https';
-    const STATUS_200                    = '200';
+    public const HEADER_CONTENT_TYPE           = 'Content-Type';
+    public const TRANSPORT_HTTP                = 'http';
+    public const TRANSPORT_HTTPS               = 'https';
+    public const STATUS_200                    = '200';
 
     /** @var string $uri **/
     protected $uri;
