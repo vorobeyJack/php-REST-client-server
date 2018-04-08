@@ -1,7 +1,6 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
-namespace App\Web\Http;
+namespace vrba\rest\Web\Http;
 
 /**
  * Class AbstractHttp
@@ -14,14 +13,12 @@ class AbstractHttp
     const METHOD_DELETE                 = 'DELETE';
     const CONTENT_TYPE_HTML             = 'text/html';
     const CONTENT_TYPE_JSON             = 'application/json';
-    const CONTENT_TYPE_FORM_URL_ENCODED =
-        'application/x-www-form-urlencoded';
+    const CONTENT_TYPE_FORM_URL_ENCODED = 'application/x-www-form-urlencoded';
+
     const HEADER_CONTENT_TYPE           = 'Content-Type';
     const TRANSPORT_HTTP                = 'http';
     const TRANSPORT_HTTPS               = 'https';
     const STATUS_200                    = '200';
-//    const STATUS_401                    = '401';
-//    const STATUS_500                    = '500';
 
     protected $uri;
     protected $method;
@@ -34,10 +31,13 @@ class AbstractHttp
     /**
      * @param string $key
      * @param string $value
+     * @return AbstractHttp
      */
-    public function setHeaderByKey(string $key, string $value): void
+    public function setHeaderByKey(string $key, string $value): AbstractHttp
     {
         $this->headers[$key] = $value;
+
+        return $this;
     }
 
     /**

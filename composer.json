@@ -2,7 +2,7 @@
   "name": "REST/client-server",
   "authors": [
     {
-      "name": "vorobeyJack",
+      "name": "Evgenii Vorobey",
       "email": "evgeniivorobey1404@gmail.com"
     }
   ],
@@ -11,7 +11,7 @@
   },
   "autoload": {
     "psr-4": {
-      "App\\": "src/vorobeyjack"
+      "vrba\\rest": "src/"
     }
   }
 }

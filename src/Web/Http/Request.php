@@ -1,7 +1,6 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
-namespace App\Web\Http;
+namespace vrba\rest\Web\Http;
 
 /**
  * Class Request

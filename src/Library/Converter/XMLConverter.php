@@ -1,19 +1,21 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
-namespace App\Library\Converter;
+namespace vrba\rest\Library\Converter;
 
-use SimpleXMLIterator;
-use SimpleXMLElement;
+use \SimpleXMLIterator;
+use \SimpleXMLElement;
 
-class XMLConverter implements \ConverterInterface
+/**
+ * Class XMLConverter
+ *
+ * @package vrba\rest\Library\Converter
+ */
+class XMLConverter implements ConverterInterface
 {
     const UNKNOWN_KEY = 'unknown_key';
 
     /**
-     * @param \SimpleXMLIterator $xml
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function xmlToArray(SimpleXMLIterator $xml): array
     {
@@ -22,6 +24,7 @@ class XMLConverter implements \ConverterInterface
             if (!array_key_exists($xml->key(), $a)) {
                 $a[$xml->key()] = [];
             }
+
             if ($xml->hasChildren()) {
                 $a[$xml->key()][] = $this->xmlToArray($xml->current());
             } else {
@@ -34,11 +37,9 @@ class XMLConverter implements \ConverterInterface
     }
 
     /**
-     * @param array $arr
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function arrayToXML(array $arr)
+    public function arrayToXml(array $arr)
     {
         $xml = new SimpleXMLElement(
             '<?xml version="1.0" standalone="yes"?><root></root>');
@@ -48,20 +49,21 @@ class XMLConverter implements \ConverterInterface
     }
 
     /**
-     * @param $value
-     * @param $xml
+     * {@inheritdoc}
      */
-    public function phpToXML($value, &$xml)
+    public function phpToXml($value, &$xml)
     {
         $node = $value;
         if (is_object($node)) {
             $node = get_object_vars($node);
         }
+
         if (is_array($node)) {
             foreach ($node as $k => $v) {
                 if (is_numeric($k)) {
                     $k = 'number' . $k;
                 }
+
                 if (is_array($v)) {
                     $newNode = $xml->addChild($k);
                     $this->phpToXml($v, $newNode);

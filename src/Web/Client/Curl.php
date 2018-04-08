@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Web\Client;
+namespace vrba\rest\Web\Client;
 
 use App\Web\Http\Request;
 use App\Web\Http\Response;
