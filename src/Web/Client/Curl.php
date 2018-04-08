@@ -2,23 +2,28 @@
 
 namespace vrba\rest\Web\Client;
 
-use App\Web\Http\Request;
-use App\Web\Http\Response;
+use vrba\rest\Web\Http\{Request, Response};
 
+/**
+ * Class Curl
+ *
+ * @package vrba\rest\Web\Client
+ */
 class Curl
 {
     /**
-     * @param \App\Web\Http\Request $request
+     * @param Request $request
      */
     public static function send(Request $request)
     {
         $data     = $request->getDataEncoded();
         $response = new Response();
         switch ($request->getMethod()) {
-            case Request::METHOD_GET :
+            case Request::METHOD_GET:
                 $uri     = ($data)
-                    ? $request->getUri() . '?' . $data
+                    ? $request->getUri() .'?'. $data
                     : $request->getUri();
+
                 $options = [
                     CURLOPT_URL            => $uri,
                     CURLOPT_HEADER         => 0,
@@ -26,7 +31,7 @@ class Curl
                     CURLOPT_TIMEOUT        => 4
                 ];
                 break;
-            case Request::METHOD_POST :
+            case Request::METHOD_POST:
                 $options = [
                     CURLOPT_POST           => 1,
                     CURLOPT_HEADER         => 0,
@@ -42,8 +47,8 @@ class Curl
     }
 
     /**
-     * @param \App\Web\Http\Response $response
-     * @param                        $payload
+     * @param Response $response
+     * @param $payload
      */
     protected static function getResults(Response $response, $payload)
     {
@@ -53,7 +58,7 @@ class Curl
                 case (stripos($type, Response::CONTENT_TYPE_JSON) !== false):
                     $response->setData(json_decode($payload));
                     break;
-                default :
+                default:
                     $response->setData($payload);
                     break;
             }

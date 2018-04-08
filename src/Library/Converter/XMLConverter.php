@@ -2,9 +2,6 @@
 
 namespace vrba\rest\Library\Converter;
 
-use \SimpleXMLIterator;
-use \SimpleXMLElement;
-
 /**
  * Class XMLConverter
  *
@@ -17,7 +14,7 @@ class XMLConverter implements ConverterInterface
     /**
      * {@inheritdoc}
      */
-    public function xmlToArray(SimpleXMLIterator $xml): array
+    public function xmlToArray(\SimpleXMLIterator $xml): array
     {
         $a = [];
         for ($xml->rewind(); $xml->valid(); $xml->next()) {
@@ -41,7 +38,7 @@ class XMLConverter implements ConverterInterface
      */
     public function arrayToXml(array $arr)
     {
-        $xml = new SimpleXMLElement(
+        $xml = new \SimpleXMLElement(
             '<?xml version="1.0" standalone="yes"?><root></root>');
         $this->phpToXml($arr, $xml);
 

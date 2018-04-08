@@ -24,14 +24,19 @@ class AbstractHttp
 
     /** @var string $uri **/
     protected $uri;
+
     /** @var string $method **/
     protected $method;
+
     /** @var string $scheme **/
     protected $scheme;
+
     /** @var array $headers **/
     protected $headers = [];
+
     /** @var array $metaData **/
     protected $metaData = [];
+
     /** @var array $data **/
     protected $data = [];
 

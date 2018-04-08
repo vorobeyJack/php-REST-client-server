@@ -1,22 +1,20 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types = 1);
 
-namespace App\Web\Client;
+namespace vrba\rest\Web\Client;
 
-use App\Web\Http\Request;
-use App\Web\Http\Response;
+use vrba\rest\Web\Http\{Request, Response};
 
 /**
  * Class Streams
- * @package App\Web\Client
+ *
+ * @package vrba\rest\Web\Client
  */
 class Streams
 {
     const BYTES_TO_READ = 4096;
 
     /**
-     * @param \App\Web\Http\Request $request
-     *
+     * @param Request $request
      * @return mixed
      */
     public static function send(Request $request)
@@ -24,13 +22,13 @@ class Streams
         $data     = $request->getDataEncoded();
         $response = new Response();
         switch ($request->getMethod()) {
-            case Request::METHOD_GET :
+            case Request::METHOD_GET:
                 if ($data) {
                     $request->setUri($request->getUri() . '?' . $data);
                 }
                 $resource = fopen($request->getUri(), 'r');
                 break;
-            case Request::METHOD_POST :
+            case Request::METHOD_POST:
                 $opts     = [
                     $request->getScheme() =>
                         [
@@ -49,10 +47,9 @@ class Streams
     }
 
     /**
-     * @param \App\Web\Http\Response $response
-     * @param                        $resource
-     *
-     * @return mixed
+     * @param Response $response
+     * @param $resource
+     * @return Response
      */
     protected static function getResults(Response $response, $resource)
     {
@@ -69,10 +66,12 @@ class Streams
                 }
             }
         }
+
         $payload = '';
         while (!feof($resource)) {
             $payload .= fread($resource, self::BYTES_TO_READ);
         }
+
         if ($response->getHeaderByKey(Response::HEADER_CONTENT_TYPE)) {
             switch (true) {
                 case stripos($response->getHeaderByKey(
@@ -80,7 +79,7 @@ class Streams
                              Response::CONTENT_TYPE_JSON) !== false:
                     $response->setData(json_decode($payload));
                     break;
-                default :
+                default:
                     $response->setData($payload);
                     break;
             }
